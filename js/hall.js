@@ -137,7 +137,7 @@ buyingInfo.addEventListener('click', () => {
                 }
             }
             localStorage.setItem('tickets', JSON.stringify(arr));
-            document.location='./client_pay.html';
+            document.location='./pay.html';
         })
     })
 })
