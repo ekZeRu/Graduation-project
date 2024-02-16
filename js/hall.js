@@ -1,9 +1,11 @@
 const btnReserv = document.querySelector(".btn");
 const main = document.querySelector(".main");
+const body = document.querySelector(".body");
 const filmTime = document.querySelector(".film__time");
 const filmName = document.querySelector(".film__name");
 const hallNumber = document.querySelector(".hall__number");
 const places = document.querySelector(".places");
+const buyingInfo = document.querySelector(".buying__info");
 let checkedSeans = localStorage.getItem('checkedSeans');
 let arr = [];
 let ticket;
@@ -12,15 +14,22 @@ let numbOfRow;
 let numbOfPlace;
 let day = localStorage.getItem('checkedDate');
 let month = localStorage.getItem('searchMonth');
+let touchCount = 0;
+let reversTouchCount = 0;
 
-touchCount = 0;
-main.addEventListener('touchstart', () => {
-    touchCount++;
-})
-
-main.addEventListener('touchend', () => {
-    if(touchCount %2 === 0) {
-        main.style.width = Number(main.style.width) * 1.5;
+buyingInfo.addEventListener('click', () => {
+    if((Number(body.getBoundingClientRect().width)) < 1199) {
+        touchCount++;
+        if((reversTouchCount %2 !== 0) && (reversTouchCount !== 0) && (touchCount %2 === 0)) {
+            body.style.width = (Number(body.getBoundingClientRect().width) / 1.5) + 'px';
+            touchCount = 0;
+            reversTouchCount = 0;
+            return;
+        }
+        if(touchCount %2 === 0) {
+            body.style.width = (Number(body.getBoundingClientRect().width) * 1.5) + 'px';
+            reversTouchCount++;
+        } 
     }
 })
 
@@ -43,10 +52,8 @@ main.addEventListener('touchend', () => {
             .then( response => response.json())
             .then( function(data) {
                 console.log( data );
-
                 data.result.forEach(element => {
                     places.insertAdjacentHTML('beforeend', `<div class="rows_of_scheme"></div>`);
-
                 });
 
                 let maxPlaces;
@@ -130,7 +137,7 @@ main.addEventListener('touchend', () => {
                 }
             }
             localStorage.setItem('tickets', JSON.stringify(arr));
-            document.location='./pay.html';
+            document.location='./client_pay.html';
         })
     })
 })
