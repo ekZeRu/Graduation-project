@@ -1083,7 +1083,7 @@ body {
   background-image: url(../images/popup_admin.png);
   background-repeat: no-repeat;
   background-position: top right 45%;
-  background-size: contain;
+  background-size: cover;
   position: relative;
   z-index: 1;
 }
